@@ -1,0 +1,17 @@
+#header {
+    color: #607d8b;
+    font-family: "Didact Gothic";
+    background-color: #e0f2f1;
+    height: 100px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1;
+}
+
+#header-text-main {
+    width: 10em;
+    margin: 0.5em auto;
+    font-size: 40px;
+}
