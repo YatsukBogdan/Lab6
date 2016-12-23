@@ -10,8 +10,23 @@
     z-index: 1;
 }
 
-#header-text-main {
-    width: 10em;
-    margin: 0.5em auto;
+.header-text-main {
+    display: inline-block;
+    margin-top: 20px;
+    margin-left: 50px;
     font-size: 40px;
+}
+
+#login-block {
+    display: inline-block;
+    margin-left: 200px;
+}
+
+.user-block {
+  display: inline-block;
+  margin-left: 500px;
+}
+
+.username-header, .admin-panel {
+  font-size: 24px;
 }

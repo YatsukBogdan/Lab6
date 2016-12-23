@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import Song from './Song.js';
+import isAuthorized from '../isAuthorized';
+import Header from '../Header';
 
 const FindSongs = React.createClass({
   componentDidMount() {
+    isAuthorized(this);
     this.findSongs();
   },
   getInitialState() {
@@ -38,20 +41,27 @@ const FindSongs = React.createClass({
     )
   },
   render() {
-    return (
-      <div className="container" id="header">
-        <div id="header-text-main">
-          <p>
-            <b><a className="page-link" href="/">Music Lyrics</a></b>
-          </p>
-        </div>
+    if (this.state.isAuthorized) {
+      return (
         <div>
-          <input onChange={e => this.findSongs(e)} id='findsong-input'/>
-          <p>Result for word: {this.state.word}</p>
-          {this.state.rendered_songs}
+          <Header />
+          <div className="container" id="main-content">
+            <input onChange={e => this.findSongs(e)} id='findsong-input'/>
+            <p>Result for word: {this.state.word}</p>
+            {this.state.rendered_songs}
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div>
+          <Header />
+          <div className="container" id="main-content">
+              <p>You are not authorized</p>
+          </div>
+        </div>
+      );
+    }
   }
 });
 

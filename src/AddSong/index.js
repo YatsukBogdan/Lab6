@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
+import Header from '../Header';
+
+import isAuthorized from '../isAuthorized';
 
 const AddSong = React.createClass({
+  componentDidMount() {
+    isAuthorized(this);
+  },
   getInitialState() {
     return {
       urlDisabled: 'disabled',
@@ -60,41 +66,50 @@ const AddSong = React.createClass({
     }
   },
   render() {
-    return (
-      <div className="container" id="header">
-        <div id="header-text-main">
-          <p>
-            <b><a className="page-link" href="/">Music Lyrics</a></b>
-          </p>
-        </div>
+    if (this.state.isAuthorized) {
+      return (
         <div>
+          <Header />
+          <div className="container" id="main-content">
+            <div>
 
-          <label>Name</label>
-          <input id='name'/><br/>
+              <label>Name</label>
+              <input id='name'/><br/>
 
-          <label>Artist</label>
-          <input id='artist'/><br/>
+              <label>Artist</label>
+              <input id='artist'/><br/>
 
-          <input onChange={e => this.urlLocal()} type='radio' name='image-option' id='url_option'/> URL<br/>
-          <input onChange={e => this.urlLocal()} type='radio' name='image-option' id='local_option'/> Local storage<br/>
+              <input onChange={e => this.urlLocal()} type='radio' name='image-option' id='url_option'/> URL<br/>
+              <input onChange={e => this.urlLocal()} type='radio' name='image-option' id='local_option'/> Local storage<br/>
 
-          <label>Image URL</label>
-          <input disabled={this.state.urlDisabled} id='img'/><br/>
-          <input disabled={this.state.localDisabled} type="file" id="upload-file-input"/><br/>
+              <label>Image URL</label>
+              <input disabled={this.state.urlDisabled} id='img'/><br/>
+              <input disabled={this.state.localDisabled} type="file" id="upload-file-input"/><br/>
 
-          <label>URL YouTube</label>
-          <input id='url'/><br/>
+              <label>URL YouTube</label>
+              <input id='url'/><br/>
 
-          <label>Album</label>
-          <input id='album'/><br/>
+              <label>Album</label>
+              <input id='album'/><br/>
 
-          <label>Year</label>
-          <input id='year'/><br/>
+              <label>Year</label>
+              <input id='year'/><br/>
 
-          <button onClick={e => this.uploadSong(e)}>Add</button>
+              <button onClick={e => this.uploadSong(e)}>Add</button>
+            </div>
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div>
+          <Header />
+          <div className="container" id="main-content">
+              <p>You are not authorized</p>
+          </div>
+        </div>
+      );
+    }
   }
 });
 

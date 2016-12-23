@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Header from '../Header';
+import isAuthorized from '../isAuthorized';
 
 import './style.css';
 
@@ -7,6 +8,7 @@ import $ from 'jquery';
 
 const Song = React.createClass({
   componentDidMount() {
+    isAuthorized(this);
     this.loadSong();
   },
   getInitialState() {
@@ -48,30 +50,41 @@ const Song = React.createClass({
     );
   },
   render() {
-    return (
-      <div>
-        <Header />
-        <div className="container" id="main-content">
-          <div className="row song-record">
-              <div className="col-md-5">
-                <a href={this.state.url}>
-                  <img className="song-img" src={this.state.img} />
-                </a>
-              </div>
-              <div className="col-md-7 song-description">
-                  <h1><b>{this.state.name}</b></h1>
-                  <h3>{this.state.artist}</h3>
-                  <h3>Album: {this.state.album}</h3>
-                  <h3>Year: {this.state.year}</h3>
-              </div>
-              <button onClick={e => this.deleteSong(e)}>Delete</button>
-          </div>
-          <div className='row' id="lyrics">
+    if (this.state.isAuthorized) {
+      return (
+        <div>
+          <Header />
+          <div className="container" id="main-content">
+            <div className="row song-record">
+                <div className="col-md-5">
+                  <a href={this.state.url}>
+                    <img className="song-img" src={this.state.img} />
+                  </a>
+                </div>
+                <div className="col-md-7 song-description">
+                    <h1><b>{this.state.name}</b></h1>
+                    <h3>{this.state.artist}</h3>
+                    <h3>Album: {this.state.album}</h3>
+                    <h3>Year: {this.state.year}</h3>
+                </div>
+                <button onClick={e => this.deleteSong(e)}>Delete</button>
+            </div>
+            <div className='row' id="lyrics">
 
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div>
+          <Header />
+          <div className="container" id="main-content">
+              <p>You are not authorized</p>
+          </div>
+        </div>
+      );
+    }
   }
 });
 

@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import Header from '../Header';
 import Song from './Song';
+import isAuthorized from '../isAuthorized';
 
 import $ from 'jquery';
 
 const Songs = React.createClass({
   componentDidMount() {
+    isAuthorized(this);
     this.loadSongs();
     this.songsCount();
   },
@@ -54,13 +56,24 @@ const Songs = React.createClass({
     return page_links;
   },
   render() {
-    return (
-      <div>
-        <Header />
-        <div className='container' id='main-content'>{this.renderSongs()}</div>
-        {this.renderPageLinks()}
-      </div>
-    );
+    if (this.state.isAuthorized) {
+      return (
+        <div>
+          <Header />
+          <div className='container' id='main-content'>{this.renderSongs()}</div>
+          {this.renderPageLinks()}
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <Header />
+          <div className="container" id="main-content">
+              <p>You are not authorized</p>
+          </div>
+        </div>
+      );
+    }
   }
 });
 
